@@ -1,0 +1,15 @@
+<h1>Payment Successful!</h1>
+<h2>Your Orders</h2>
+
+<% if @orders.present? %>
+  <% @orders.each do |order| %>
+    <p>
+      Order ID: <%= order['id'] %><br>
+      Amount: <%= order['amount'] %><br>
+      Currency: <%= order['currency'] %><br>
+      Status: <%= order['status'] %><br>
+    </p>
+  <% end %>
+<% else %>
+  <p>No orders found.</p>
+<% end %>

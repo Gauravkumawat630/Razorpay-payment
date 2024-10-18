@@ -1,0 +1,42 @@
+<%= form_with url: payments_path, method: :post, id: 'razorpay-form', local: false do |form| %>
+    <%= form.label :amount, "Amount (INR)" %>
+    <%= form.number_field :amount %>
+    <%= form.button "Pay", id: "pay-button" %>
+  <% end %>
+  
+  <script>
+    document.getElementById('razorpay-form').onsubmit = function(e) {
+      e.preventDefault();
+  
+      var amount = document.querySelector('input[name="amount"]').value;
+  
+      var options = {
+        key: '<%= ENV['RAZORPAY_KEY_ID'] %>', // Your Razorpay key ID
+        amount: amount * 100, // Amount in paise
+        currency: "INR",
+        name: "gaurav ",
+        description: "Payment for Order",
+        handler: function (response) {
+          // Handle success here (send response to your server)
+          console.log(response);
+          // Optionally redirect to success page
+          window.location.href = '/payments/success';
+        },
+        prefill: {
+          name: "gaurav",
+          email: "gauravkumawa630@gmail.com",
+          contact: "7240332739"
+        },
+        notes: {
+          address: "note value"
+        },
+        theme: {
+          color: "#F37254"
+        }
+      };
+  
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    };
+  </script>
+  
